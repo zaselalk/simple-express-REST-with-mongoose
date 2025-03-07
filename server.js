@@ -29,8 +29,13 @@ app.post("/registration", (req, res) => {
     console.log(username, password)
 })
 
-app.listen(3000, () => {
-    mongoose.connect("mongodb+srv://aselascience:k9RGheHfxwycrIC4@cluster0.0kjgl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+app.listen(3000, async () => {
+    try {
+        await mongoose.connect("mongodb+srv://aselascience:k9RGheHfxwycrIC4@cluster0.0kjgl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+        console.log("Database connected")
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 
