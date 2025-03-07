@@ -3,11 +3,13 @@ const app = express()
 const cors = require('cors')
 const hrInterview = require('./middleware/authenticate')
 const mongoose = require('mongoose')
+const userModel = require('./models/User')
+
 
 //cors
 app.use(cors())
 // Middleware
-app.use(hrInterview)
+// app.use(hrInterview)
 app.use(express.json());
 
 
@@ -21,12 +23,17 @@ app.get('/', (req, res) => {
     })
 })
 
-app.post("/registration", (req, res) => {
+app.post("/registration", async (req, res) => {
     const { username, password } = req.body
-    res.json({
-        message: "Registration Successful"
+
+    //save to the database
+    const createdUser = await userModel.create({
+        username,
+        password
     })
-    console.log(username, password)
+
+    res.json(createdUser)
+
 })
 
 app.listen(3000, async () => {
